@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <style>
+        .add{
+            height : 180px;
+        }
+        .property{
+            height : 150px;
+            background-color:#888888;
+        }
+        .remove{
+            height : 180px;
+        }        
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"   integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="   crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>    
+
+</head>
+<body>
+    <h1 id="h1-title"></h1>
+    <div id="main">
+    </div>
+    <div id="footer"></div>
+
+<script type="text/javascript">
+    $(function(){
+        var template = $("#library").text();
+        var compiled = _.template(template);
+        $('#main').html(compiled());
+        $("#h1-title").text("図書館選択");
+    });    
+</script>
+<script type="text/template" id="library">
+<!-- 図書館選択用 -->
+    <button id="library-ikoma" class="btn btn-primary" type="submit" value="ikoma">生駒図書館</button>
+    <button id="library-kita" class="btn btn-primary" type="submit" value="kita">北分館</button>
+    <button id="library-minami" class="btn btn-primary" type="submit" value="minami">南分館</button>
+    <button id="library-ekimae" class="btn btn-primary" type="submit" value="ekimae">生駒駅前</button>
+    <button id="library-shikanodai" class="btn btn-primary" type="submit" value="shikanodai">鹿ノ台ふれあいホール</button>
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#main").on("click","[id^=library-]",function(){
+            var template = $("#age").text();
+            var compiled = _.template(template);
+            $("#main").html(compiled());
+            $("#h1-title").text("年代選択");
+        });
+    });    
+</script>
+
+<script type="text/template" id="age">
+<!-- 年代選択 -->
+    <button id="age-kindergarden" class="btn btn-primary" type="submit" value="kindergarden">幼稚園</button>
+    <button id="age-low-school" class="btn btn-primary" type="submit" value="low-school">小学校低学年</button>
+    <button id="age-high-school" class="btn btn-primary" type="submit" value="high-school">小学校高学年</button>
+    <button id="age-junior-highschool" class="btn btn-primary" type="submit" value="junior-highschool">中学生</button>
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $("#main").on("click","[id^=age-]",function(){
+            var template = $("#property").text();
+            var compiled = _.template(template);
+            $('#main').html(compiled());
+            $("#h1-title").text("優先項目選択");
+            $("#property-locate").draggable();
+            $("#property-age").draggable();
+            $("#property-genre").draggable();
+        });
+    });    
+</script>
+
+<script type="text/template" id="property">
+<!-- 優先項目選択 -->
+    <div class="add">
+    </div>
+    <div class="property">
+        <div class="row">
+            <div class="col-xs-4">
+                <div id="property-locate">
+                    <img class="img-circle" src="https://placehold.jp/3d4070/ffffff/150x150.png?text=%E5%B9%B4%E9%BD%A2">
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div id="property-age">
+                    <img class="img-circle" src="https://placehold.jp/3d4070/ffffff/150x150.png?text=%E5%A0%B4%E6%89%80">
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div id="property-genre">
+                    <img class="img-circle" src="https://placehold.jp/3d4070/ffffff/150x150.png?text=%E3%82%B8%E3%83%A3%E3%83%B3%E3%83%AB">
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="remove">
+    </div>
+
+    <button id="btn-property" class="btn btn-primary">一覧表示へ</button>
+</script>
+
+<script type="text/javascript">
+    var source = {
+        booklists:[
+            {"name":"週刊ジャソプ","genre":"雑誌","isdn":"111-11111-111","image":"https://placehold.jp/3d4070/ffffff/100x150.png"},
+            {"name":"ドラゴソボール","genre":"まんが","isdn":"222-22222-222","image":"https://placehold.jp/3d4070/ffffff/100x150.png"},
+            {"name":"マリオ必勝法","genre":"攻略本","isdn":"333-33333-333","image":"https://placehold.jp/3d4070/ffffff/100x150.png"},
+            {"name":"ヘンデルとグレテル","genre":"童話","isdn":"444-44444-444","image":"https://placehold.jp/3d4070/ffffff/100x150.png"}
+        ]};
+        
+    $(function(){
+        $("#main").on("click","#btn-property",function(){
+            var template = $("#booklist").text();
+            var compiled = _.template(template);
+            $('#main').html(compiled(source));
+            $("#h1-title").text("おすすめ本一覧");
+        });
+    });    
+</script>
+
+<script type="text/template" id="booklist">
+<!-- 本のリスト -->
+<div class="container">
+    <div class="row">
+        <div id="list" class="col-xs-offset-3 col-xs-6">
+            <table class="table">
+                <% _.each(booklists,function(booklist){ %>
+                    <tr>
+                        <td><img class="img-responsive" src="<%- booklist.image %>"></td>
+                        <td>
+                            <%- booklist.name %><br/>
+                            <%- booklist.genre %><br/>
+                            <%- booklist.isdn %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+        <div class="col-xs-3"></div>
+    </div>
+</div>
+</script>
+
+</body>
+</html>
